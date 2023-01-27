@@ -18,7 +18,9 @@ docker build -t docker-spotify .
 ### **Deploy:**
 
 ```
-docker run --rm -p 5800:5800 -p 5900:5900 -p 8080:8080 --device /dev/snd  docker-spotify:latest
+docker run --rm -p 5900:5900  docker-spotify:latest
+docker run --rm -p 5901:5900  docker-spotify:latest
+docker run --rm -p 5902:5900  docker-spotify:latest
 ```
 
 ### **Ports:**
