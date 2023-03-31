@@ -1,0 +1,30 @@
+version: "3"
+services:
+  vpn2:
+    container_name: vpn2
+    image: dperson/openvpn-client:latest
+    cap_add:
+      - net_admin
+    restart: always
+    volumes:
+      - /dev/net/tun:/dev/net/tun
+      - /opt/docker/openvpn/docker-compose/2/client:/vpn # You'll need to provide this
+    security_opt:
+      - label:disable
+    ports:
+      - 5902:5900
+    networks:
+      - vpn2
+    entrypoint: ["/sbin/tini", "--", "/usr/bin/openvpn.sh", "-d"]
+  Spotify002:
+    container_name: Spotify002
+    privileged: true
+    restart: always
+    image: docker-spotify
+    network_mode: service:vpn2
+    environment:
+      - VNC_PASSWORD=password
+    depends_on:
+      - vpn2
+networks:
+  vpn2:
